@@ -19,8 +19,13 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function NewsletterPage({ params }: { params: { slug: string } }) {
-  const newsletter = getNewsletterBySlug(params.slug)
+export default async function NewsletterPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const newsletter = getNewsletterBySlug(slug)
 
   if (!newsletter) {
     notFound()
