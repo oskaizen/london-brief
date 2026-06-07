@@ -1,263 +1,224 @@
 'use client'
 
-import { useEffect } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
+
+const BREVO_FORM_ACTION =
+  'https://601fb65b.sibforms.com/serve/MUIFAOhcZQjee0B8BG1cSJtm9SQrdDebe3PTtrlAPTDBHU2quDIqX7KNdX9DQeNMymg1CTLobpcI_8tQkE1Xk9G6j45NpnZNH_uMSLTNk0ZTSoVSns42nV1bUO6xutAS3luH0Gwp8q1bibXy6gktIGrTBsTLYc6AC5WYYtqCN3bwoDTWasp4gzTJFbiN5OYuGmlCMEqW2Lgx5tsv'
+
+const RECAPTCHA_SITE_KEY = '6LcTF5UqAAAAAJLPBJazuUwWYnr0wqdTdPojs0fV'
+const RECAPTCHA_SCRIPT_ID = 'brevo-recaptcha-script'
+
+type BrevoResponse = {
+  success?: boolean
+  message?: string
+  errors?: Record<string, string>
+}
 
 declare global {
   interface Window {
-    handleCaptchaResponse?: () => void
+    grecaptcha?: {
+      ready: (callback: () => void) => void
+      render: (
+        container: HTMLElement,
+        options: { sitekey: string; callback?: () => void }
+      ) => number
+      getResponse: (widgetId?: number) => string
+      reset: (widgetId?: number) => void
+    }
+    onBrevoRecaptchaLoad?: () => void
   }
 }
 
-const CAPTCHA_SCRIPT_ID = 'brevo-recaptcha-script'
-const MAIN_SCRIPT_ID = 'brevo-main-script'
-const STYLESHEET_ID = 'brevo-sib-styles'
+function loadRecaptchaScript(): Promise<void> {
+  return new Promise((resolve) => {
+    const finish = () => window.grecaptcha!.ready(() => resolve())
 
-function loadStylesheet() {
-  if (document.getElementById(STYLESHEET_ID)) return
+    if (window.grecaptcha) {
+      finish()
+      return
+    }
 
-  const link = document.createElement('link')
-  link.id = STYLESHEET_ID
-  link.rel = 'stylesheet'
-  link.href = 'https://sibforms.com/forms/end-form/build/sib-styles.css'
-  document.head.appendChild(link)
-}
+    if (!document.getElementById(RECAPTCHA_SCRIPT_ID)) {
+      window.onBrevoRecaptchaLoad = finish
 
-function loadScript(scriptId: string, src: string) {
-  let script = document.getElementById(scriptId) as HTMLScriptElement | null
+      const script = document.createElement('script')
+      script.id = RECAPTCHA_SCRIPT_ID
+      script.src =
+        'https://www.google.com/recaptcha/api.js?render=explicit&onload=onBrevoRecaptchaLoad'
+      script.async = true
+      script.defer = true
+      document.body.appendChild(script)
+      return
+    }
 
-  if (!script) {
-    script = document.createElement('script')
-    script.id = scriptId
-    script.async = true
-    script.defer = true
-    document.body.appendChild(script)
-  }
-
-  script.src = src
-}
-
-function unloadScript(scriptId: string) {
-  document.getElementById(scriptId)?.remove()
+    const interval = window.setInterval(() => {
+      if (window.grecaptcha) {
+        window.clearInterval(interval)
+        finish()
+      }
+    }, 100)
+  })
 }
 
 export default function BrevoForm() {
-  useEffect(() => {
-    window.handleCaptchaResponse = () => {
-      document.getElementById('sib-captcha')?.dispatchEvent(new Event('captchaChange'))
-    }
+  const captchaRef = useRef<HTMLDivElement>(null)
+  const captchaWidgetId = useRef<number | null>(null)
 
-    loadStylesheet()
-    loadScript(CAPTCHA_SCRIPT_ID, 'https://www.google.com/recaptcha/api.js?hl=en')
-    loadScript(MAIN_SCRIPT_ID, 'https://sibforms.com/forms/end-form/build/main.js')
+  const [email, setEmail] = useState('')
+  const [optIn, setOptIn] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    let cancelled = false
+
+    loadRecaptchaScript().then(() => {
+      if (cancelled || !captchaRef.current || captchaWidgetId.current !== null) return
+
+      captchaWidgetId.current = window.grecaptcha!.render(captchaRef.current, {
+        sitekey: RECAPTCHA_SITE_KEY,
+      })
+    })
 
     return () => {
-      delete window.handleCaptchaResponse
-      unloadScript(CAPTCHA_SCRIPT_ID)
-      unloadScript(MAIN_SCRIPT_ID)
-      document.getElementById(STYLESHEET_ID)?.remove()
+      cancelled = true
     }
   }, [])
 
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setMessage('')
+
+    if (!email.trim()) {
+      setStatus('error')
+      setMessage('Please enter your email address.')
+      return
+    }
+
+    if (!optIn) {
+      setStatus('error')
+      setMessage('Please accept the privacy statement to subscribe.')
+      return
+    }
+
+    const captchaResponse =
+      captchaWidgetId.current !== null
+        ? window.grecaptcha?.getResponse(captchaWidgetId.current)
+        : ''
+
+    if (!captchaResponse) {
+      setStatus('error')
+      setMessage('Please complete the CAPTCHA.')
+      return
+    }
+
+    setStatus('loading')
+
+    const formData = new FormData()
+    formData.append('EMAIL', email.trim())
+    formData.append('OPT_IN', '1')
+    formData.append('email_address_check', '')
+    formData.append('locale', 'en')
+    formData.append('g-recaptcha-response', captchaResponse)
+
+    try {
+      const response = await fetch(`${BREVO_FORM_ACTION}?isAjax=1`, {
+        method: 'POST',
+        body: formData,
+      })
+
+      const data: BrevoResponse = JSON.parse(await response.text())
+
+      if (data.success) {
+        setStatus('success')
+        setMessage(data.message || 'Your subscription has been successful.')
+        setEmail('')
+        setOptIn(false)
+        if (captchaWidgetId.current !== null) {
+          window.grecaptcha?.reset(captchaWidgetId.current)
+        }
+        return
+      }
+
+      setStatus('error')
+      setMessage(
+        data.message ||
+          Object.values(data.errors ?? {})[0] ||
+          'Your subscription could not be saved. Please try again.'
+      )
+      if (captchaWidgetId.current !== null) {
+        window.grecaptcha?.reset(captchaWidgetId.current)
+      }
+    } catch {
+      setStatus('error')
+      setMessage('Your subscription could not be saved. Please try again.')
+      if (captchaWidgetId.current !== null) {
+        window.grecaptcha?.reset(captchaWidgetId.current)
+      }
+    }
+  }
+
   return (
-    <div className="sib-form" style={{ textAlign: 'center', backgroundColor: '#EFF2F7' }}>
-      <div id="sib-form-container" className="sib-form-container">
-        <div
-          id="error-message"
-          className="sib-form-message-panel"
-          style={{
-            fontFamily: 'Helvetica,sans-serif',
-            fontSize: '16px',
-            color: '#661d1d',
-            backgroundColor: '#ffeded',
-            borderColor: '#ff4949',
-            borderRadius: '3px',
-            maxWidth: '540px',
-          }}
-        >
-          <div className="sib-form-message-panel__text sib-form-message-panel__text--center">
-            <span className="sib-form-message-panel__inner-text">
-              Your subscription could not be saved. Please try again.
-            </span>
-          </div>
+    <div className="rounded-md border border-gray-200 bg-white p-6 text-left shadow-sm">
+      <p className="mb-1 text-sm font-bold text-gray-700">The London Brief</p>
+      <p className="mb-6 text-xs text-gray-600">
+        I talk about things I see that can move markets. Subscribe to learn with me.
+      </p>
+
+      {status === 'success' && (
+        <div className="mb-4 rounded-md border border-green-300 bg-green-50 px-4 py-3 text-sm text-green-800">
+          {message}
+        </div>
+      )}
+
+      {status === 'error' && message && (
+        <div className="mb-4 rounded-md border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800">
+          {message}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <input
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
+            type="email"
+            id="EMAIL"
+            name="EMAIL"
+            autoComplete="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            disabled={status === 'loading'}
+            required
+          />
+          <p className="mt-1 text-xs text-gray-500">Provide your email address to subscribe.</p>
         </div>
 
-        <div
-          id="success-message"
-          className="sib-form-message-panel"
-          style={{
-            fontFamily: 'Helvetica,sans-serif',
-            fontSize: '16px',
-            color: '#085229',
-            backgroundColor: '#e7faf0',
-            borderColor: '#13ce66',
-            borderRadius: '3px',
-            maxWidth: '540px',
-          }}
+        <label className="flex items-start gap-2 text-sm text-gray-700">
+          <input
+            type="checkbox"
+            id="OPT_IN"
+            name="OPT_IN"
+            checked={optIn}
+            onChange={(event) => setOptIn(event.target.checked)}
+            disabled={status === 'loading'}
+            className="mt-1"
+          />
+          <span>
+            I agree to receive your newsletters and accept the data privacy statement.
+          </span>
+        </label>
+
+        <div ref={captchaRef} className="flex justify-center" />
+
+        <button
+          type="submit"
+          disabled={status === 'loading'}
+          className="rounded-md bg-gray-700 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          <div className="sib-form-message-panel__text sib-form-message-panel__text--center">
-            <span className="sib-form-message-panel__inner-text">
-              Your subscription has been successful.
-            </span>
-          </div>
-        </div>
-
-        <div
-          id="sib-container"
-          className="sib-container--large sib-container--vertical"
-          style={{
-            maxWidth: '540px',
-            textAlign: 'center',
-            backgroundColor: 'rgba(255,255,255,1)',
-            border: '1px solid #C0CCD9',
-            borderRadius: '3px',
-          }}
-        >
-          <form
-            id="sib-form"
-            method="POST"
-            action="https://601fb65b.sibforms.com/serve/MUIFAOhcZQjee0B8BG1cSJtm9SQrdDebe3PTtrlAPTDBHU2quDIqX7KNdX9DQeNMymg1CTLobpcI_8tQkE1Xk9G6j45NpnZNH_uMSLTNk0ZTSoVSns42nV1bUO6xutAS3luH0Gwp8q1bibXy6gktIGrTBsTLYc6AC5WYYtqCN3bwoDTWasp4gzTJFbiN5OYuGmlCMEqW2Lgx5tsv"
-            data-type="subscription"
-          >
-            <div style={{ padding: '8px 0' }}>
-              <p style={{ fontFamily: 'Helvetica,sans-serif', fontSize: '14px', fontWeight: 700, color: '#3C4858' }}>
-                The London Brief
-              </p>
-            </div>
-
-            <div style={{ padding: '8px 0' }}>
-              <p style={{ fontFamily: 'Helvetica,sans-serif', fontSize: '12px', color: '#3C4858' }}>
-                I talk about things I see that can move markets. Subscribe to learn with me.
-              </p>
-            </div>
-
-            <div style={{ padding: '8px 0' }}>
-              <div className="sib-input sib-form-block">
-                <div className="form__entry entry_block">
-                  <div className="form__label-row">
-                    <div className="entry__field">
-                      <input
-                        className="input"
-                        type="text"
-                        id="EMAIL"
-                        name="EMAIL"
-                        autoComplete="off"
-                        placeholder="EMAIL"
-                        data-required="true"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <label
-                    className="entry__specification"
-                    style={{ fontFamily: 'Helvetica,sans-serif', fontSize: '12px', color: '#8390A4' }}
-                  >
-                    Provide your email address to subscribe.
-                  </label>
-                  <label
-                    className="entry__error entry__error--primary"
-                    style={{
-                      fontSize: '16px',
-                      textAlign: 'left',
-                      fontFamily: 'Helvetica, sans-serif',
-                      color: '#661d1d',
-                      backgroundColor: '#ffeded',
-                      borderRadius: '3px',
-                      borderColor: '#ff4949',
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div style={{ padding: '8px 0' }}>
-              <div className="sib-optin sib-form-block">
-                <div className="form__entry entry_mcq">
-                  <div className="form__label-row">
-                    <div className="entry__choice">
-                      <label>
-                        <input type="checkbox" className="input_replaced" value="1" id="OPT_IN" name="OPT_IN" />
-                        <span className="checkbox checkbox_tick_positive" />
-                        <span style={{ fontFamily: 'Helvetica,sans-serif', fontSize: '14px', color: '#3C4858' }}>
-                          I agree to receive your newsletters and accept the data privacy statement.
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                  <label
-                    className="entry__specification"
-                    style={{ fontFamily: 'Helvetica,sans-serif', fontSize: '12px', color: '#8390A4' }}
-                  >
-                    You may unsubscribe at any time using the link in our newsletter.
-                  </label>
-                  <label
-                    className="entry__error entry__error--primary"
-                    style={{
-                      fontSize: '16px',
-                      textAlign: 'left',
-                      fontFamily: 'Helvetica, sans-serif',
-                      color: '#661d1d',
-                      backgroundColor: '#ffeded',
-                      borderRadius: '3px',
-                      borderColor: '#ff4949',
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div style={{ padding: '8px 0' }}>
-              <div className="sib-captcha sib-form-block">
-                <div className="form__entry entry_block">
-                  <div className="form__label-row form__label-row--horizontal">
-                    <div
-                      className="g-recaptcha sib-visible-recaptcha"
-                      id="sib-captcha"
-                      data-sitekey="6LcTF5UqAAAAAJLPBJazuUwWYnr0wqdTdPojs0fV"
-                      data-callback="handleCaptchaResponse"
-                    />
-                  </div>
-                  <label
-                    className="entry__error entry__error--primary"
-                    style={{
-                      fontSize: '16px',
-                      textAlign: 'left',
-                      fontFamily: 'Helvetica, sans-serif',
-                      color: '#661d1d',
-                      backgroundColor: '#ffeded',
-                      borderRadius: '3px',
-                      borderColor: '#ff4949',
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div style={{ padding: '8px 0', textAlign: 'left' }}>
-              <button
-                className="sib-form-block__button sib-form-block__button-with-loader"
-                style={{
-                  fontFamily: 'Helvetica,sans-serif',
-                  fontSize: '16px',
-                  fontWeight: 700,
-                  color: '#FFFFFF',
-                  backgroundColor: '#3E4857',
-                  border: 'none',
-                  borderRadius: '3px',
-                  padding: '8px 16px',
-                  cursor: 'pointer',
-                }}
-                form="sib-form"
-                type="submit"
-              >
-                SUBSCRIBE
-              </button>
-            </div>
-
-            <input type="text" name="email_address_check" defaultValue="" className="input--hidden" />
-            <input type="hidden" name="locale" defaultValue="en" />
-          </form>
-        </div>
-      </div>
+          {status === 'loading' ? 'Subscribing...' : 'SUBSCRIBE'}
+        </button>
+      </form>
     </div>
   )
 }
