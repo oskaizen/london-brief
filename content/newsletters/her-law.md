@@ -1,0 +1,55 @@
+---
+title: "Her's Law"
+date: "2026-05-31"
+excerpt: "In 2014, Huawei's founder, Ren Zhengfei, told Teresa He (also known as He Tingbo), in charge of Huawei's chip research at the time, that she had $400 million per year at her disposal to advance Huawei's technology."
+---
+
+In 2014, Huawei's founder, Ren Zhengfei, told Teresa He (also known as He Tingbo), in charge of Huawei's chip research at the time, that she had $400 million per year at her disposal to advance Huawei's technology. He wanted 20,000 staffers working on chip design. In 2016, Huawei released gem-encrusted smartphones with Swarovski and hired A-listers like Scarlet Johansson to appear in commercials. But He's unit, HiSilicon, got little attention. Gadget reviewers noted that Huawei's Honor 6 smartphone outperformed the iPhone in certain benchmarks. When a reporter from CCTV pointed out that the world should know more about HiSilicon, Ren said, "Why does the outside world need to know?"
+ 
+No longer.
+ 
+He has led Huawei's semiconductor development for 30 years, transforming a small design team into China's most advanced chip developer. She was trained as a physicist and communication engineer in Beijing and was educated primarily in China unlike most of the industry who have studied in the U.S. She is now the President of Huawei's Semiconductor Business Department and Chair of Huawei's Scientist Committee.
+ 
+At the 2026 IEEE International Symposium on Circuits and Systems (ISCAS 2026) in Shanghai last week, Huawei released "Her's Law", or the Tau Scaling Law. For decades, the semiconductor industry ran on the idea of making transistors smaller, known as Moore's Law (named after Intel's co-founder Gordon Moore). He noted the number of transistors that could fit on a chip roughly doubled every two years. More transistors meant more computing power. The entire industry organized itself around the race to shrink.
+ 
+The problem is that shrinking is getting physically harder and astronomically expensive. At the frontier, chips are now measured in nanometres. To print circuits that small, chipmakers need a machine called an EUV lithography tool, made exclusively by a Dutch company called ASML. These machines cost roughly $400 million each. The U.S. has blocked China from buying them.
+ 
+Her's law focuses on reducing signal travel time rather than transistor density. Instead of asking "how many transistors can we fit?", Her's Law asks, "how fast can signals travel through the chip?" If you think of a traditional chip like a city built on a single floor, everything is spread out horizontally, and messages must travel long distances to get from one part of the chip to another. "LogicFolding" stacks the city vertically, floor upon floor, dramatically shortening the distances signals need to travel. Faster signal travel means faster computation, without needing to make the transistors themselves any smaller and without needing an EUV machine to do it. The Nikkei described this as building "50 million elevators between two vertically folded cities".
+ 
+It is less a breakthrough in miniaturisation and more a breakthrough in architecture, a different answer to the same question of how to make chips faster.
+ 
+He believes, "China does not have a single EUV machine given the current reality, so our new technology path will not rely on EUV tools. I don't believe lithography equipment is the key issue at this stage."
+ 
+She acknowledges many challenges. It's not yet a complete system, so will require years of development. EDA software needs redesigning to support the new architecture. Energy efficiency and thermal breakthroughs are needed. The architecture won't apply to AI chips and servers until 2030. She says there are "gaps in our supplying capabilities and tech capabilities." And she says demand is higher than expected while they struggle to ramp production.
+ 
+Her timeline is to match TSMC's Intel 1.4 nm without EUV by 2031.  SMIC (Huawei's manufacturing partner on this) rose 17% in the H-share market and hit the 20% limit on the A-share market on the announcement. While there are sceptics that question whether this architecture is really 1.4 nm or repackaging 7 nm, the chip will still be very fast and good for AI research.
+ 
+He gives an honest appraisal on where they stand. And it probably indicates a realistic timeline. With a graduate pool per year of 1.3 million engineers and virtually unlimited state resources to debottleneck problems, where there is a will there is a way. As China seeks to overcome the technical challenges for its rival chip architecture, it may become a mega chip producer from 2030 challenging the high gross margins that chip producers like Nvidia enjoy today.  
+ 
+Given the market only thinks one quarter ahead, this development won't matter for Nvidia's share price momentum, but in the long-term Jensen Huang's predictions that China could create a rival architecture sound prescient and Nvidia's super profits period may end.
+ 
+Bessent to Japan: Raise Interest Rates. Japan spent Y11.73 trillion ($73.6 billion) last month to support the yen after the currency slid past 160. This was a larger amount than previously reported. This is relevant to the U.S. Treasury market as Japan and institutions hold $1.2 trillion of Treasuries, the largest foreign owner. U.S. Treasury data shows Japan reduced its holdings by 4% in March, which may be one reason Bessent made a special visit to Tokyo. During his visit he expressed some concern that Japan's sale of Treasuries could exacerbate financial market volatility and push up U.S. yields. He recommended that Japan pursue "sound monetary policy", or code for hiking interest rates to narrow the interest rate differential driving the weakness in the currency in the first place. However, Prime Minister Takaichi was elected on a mandate to raise fiscal spending and paying higher interest expense on its debt makes that hard. The yen interventions have not worked well, and the yen is almost back at 160 again. The next event is either the BOJ hiking rates, the currency pushing lower than 160, or more U.S. Treasuries are sold to defend the 160 level. The lowest probability outcome is Takaichi reversing her spending decisions. I'm not sure which pathway Japan takes but certain scenarios could have a significant impact on markets.
+ 
+Stories from Tokenmaxxing. Meta's 'Claudeonomics' dashboard ranked engineers by token consumption. It awarded titles like 'Token Legend' to top performers. One engineer processed hundreds of billions of tokens in a single month. Uber reported blowing through its annual token budget without a proportional gain in customer facing features. One widely reported incident suggested an enterprise spent $500 million more than expected in tokens as it had not imposed limits. As enterprises become more cost conscious, we could see slower growth in ARR development in the months ahead from Anthropic. That could create a sell-off in semiconductors, but the long-term trend should still hold.
+ 
+Datapoints from Cursor. Cursor released a Developer Habits Report last week. Some interesting takeaways: (1) there was a dramatic shift towards input or cache-read tokens. Cache-read tokens are cheaper to serve but are still billable. This should help Anthropic's margins and probably accounts for their earlier than expected profit target; (2) tokenmaxxing is real with P99 developers (the top 1%) producing 46x more lines than the median active user.; (3) code quality is improving with AI-generated code survival rates rising from 76% to 81% and automatic acceptance of changes rising from 7% to 37%; (4) Opus 4.7 is the most expensive per request ($1.57) and achieves the highest CursorBench score at 64.8%; but Composer 2.5 (Cursor's model) achieves 63.2% at $0.55.
+ 
+This presents a picture that is bullish for AI coding adoption and quietly concerning for incumbent model providers. Genuine productivity gains are real and accelerating which is bullish for AI more broadly. Token economics are shifting in ways that benefit margins at current pricing. But the concentration of usage is extreme making revenues vulnerable to enterprise budget discipline. And the cost-quality frontier is compressing rapidly with Cursor's own model appearing competitive at a fraction of Anthropic's prices.
+ 
+Datapoints from Private Credit. Bloomberg Credit hosted a podcast with Paul Norris, senior portfolio manager of American Century. Some interesting takeaways were that five months ago loans backed by software dropped from around 97 to 90 gradually. Many of these loans were originated when interest rates were 400 bps lower and will soon need to be refinanced. However, private credit vehicles continue to face redemptions and are struggling with returns. After fees, the vehicles may only yield 7.5%. But these vehicles are locked up, gated and must go through ramp periods. Meanwhile there is a downgrade issue as AI displaces software.
+ 
+At the very least discussions on multi-year extensions when customers are exploring in-house development with Claude Code, and revenue hikes on renewals have become much more fraught. Many SaaS licenses are by seat, but with firms becoming more efficient with AI tools, fewer seats may be needed. This makes it hard to gauge the annual recurring revenue (ARR) and make a loan.
+ 
+At the very worst, some software companies will face existential threats to their business model. For these loans the recovery value is purely IP, which is likely to be very low. For many post-2020 loans, origination standards have been lax. Like mortgage lending which turned to sub-prime when origination became difficult, the private credit market grew from $100 billion in 2007 to $2.5 trillion today. As a result, it's not a surprise to see some audit and origination disasters.
+ 
+American Century sold their BBB and BB CLO exposures, because as the refinancing cycle progresses, there may be instances where the vehicles cannot cover the debt, which could tighten conditions in this part of the market. Some of the stronger business development company (BDCs) players will also likely start marking to market rather than to model, which could force re-marking and distress from weaker BDC players. Broader contagion risk to the asset-backed finance and the investment grade (AAA) markets seems low given there remains a wall of liquidity looking for yield enhancement. The broader market remains max complacency in a world of max uncertainty.
+ 
+End Note
+ 
+AI professionals at Alibaba and DeepSeek are restricted from overseas travel. No London Eye visits for them.
+ 
+Japan's Softbank has moved up 55.6% over the year. The Nikkei is up 8.7% but would only be up 4.2% without it. Softbank and Kioxia, a memory maker, accounted for 33% of the TSE's stock turnover over last week. Market hedging in Japan has never been trickier.
+ 
+Chris Alexiuk of Nvidia wrote a blog post that had some resonance to me, "You can't outsource your understanding. Use AI responsibly".
+ 
+Omar Sayed
