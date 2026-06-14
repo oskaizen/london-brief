@@ -1,6 +1,6 @@
 ---
 title: "Let It Ride"
-date: "2026-14-06"
+date: "2026-06-14"
 excerpt: "At the end of of 2025, about 33% of U.S. household wealth was in stocks. All this money needs to go somewhere."
 ---
 
