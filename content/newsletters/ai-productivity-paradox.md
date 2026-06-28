@@ -1,0 +1,40 @@
+---
+title: "AI's Productivity Paradox"
+date: "2026-06-21"
+excerpt: "Midjourney's fancy scan is likely to create negative net productivity"
+---
+Back in the 1920s, some scientists shot a beam of atoms through a magnetic field and watched them get deflected. This proved that atoms behave like tiny magnets. In 1938, Isidor Rabi took this knowledge and hit these atoms with a second wobbling magnetic field. At the right frequency, he could get the atom’s magnet to flip directions. He could calculate how strong each atom’s magnet was, with incredible precision, what is now called ‘resonance’ (also known as NMR). In 1946, scientists showed that magnetic resonance could be detected in bulk matter. In 1971, physician Raymond Damadian published research that showed that tumour tissue and healthy tissue had different NMR relaxation times, a potential signal to detect disease. In 1973, a chemist figured out how to use magnetic field gradients to spatially encode the NMR signal into a two-dimensional image.
+ 
+MRI (magnetic resonance imaging) was born. It is now the backbone for neurology, orthopaedics and sports medicine, oncology, cardiology and functional brain imaging. It’s the gold standard for confirming or ruling out serious conditions before surgery, allowing doctors and surgeons to ‘see’ the problem clearly beforehand.
+ 
+Now, with 9 people, Midjourney, an AI imaging company, says it can ultimately replace the MRI. People stand on sensors and immerse themselves in water. In 60 seconds, they are scanned with ultrasound and computed tomography.
+ 
+A nice spa experience becomes a bastion for preventative health.
+ 
+However, ultrasound has physics limitations due to acoustics. Air in the lungs, for instance, blocks or scatters sound waves leading to significant blind spots. AI attempts to fill in and interpret the raw data, but a Baltimore neuroradiologist pointed out that Midjourney previously generated an anatomically incorrect image of a rat that was published and later retracted from a journal.
+ 
+There is no FDA clearance for this scan. But Midjourney can use the same category as DEXA scanners and other fitness trackers. It may give false positives, but you’d only know when you took a real MRI.
+ 
+Ironically, if Midjourney’s scanning technology takes off, MRI demand may grow as thousands of people take their false positives to the doctor and ask for a true scan.
+ 
+This is a mega-trend. Companies like Prenuvo and Ezra sell direct-to-consumer MRI scans marketed with celebrity endorsements. According to estimates, 95% of full-body MRIs turn up at least one incidental finding. 9% are oncology relevant, and only 0.5% are suspicious for cancer. The use of the machines has led to biopsies and increased utilization.
+ 
+Apple’s Heart Study tracked 419,000 participants. About 0.52% or 2,161 people received an irregular heart notification. About 76% of these who also completed a survey consulted a doctor upon the notification with the majority not having an issue. Meanwhile the watch missed patients that did eventually have an issue.
+ 
+In economic terms, Midjourney’s fancy scan is likely to create negative net productivity. It saves 89 minutes per scan locally, but the aggregate system must absorb a new verification tax of radiologist time, MRI slots and biopsies (as well as patient time) from the false positives that the 89 minutes of time savings never accounted for.
+ 
+Accenture Says It’s the War and Not AI. Accenture reported that it would miss revenue guidance. The market took the stock down 18%. While Accenture blamed the change in guidance on the war and specific customers in the Middle East, there was a bookings deceleration down 2% year on year split 15% year on year decline in Managed Services bookings offset by an 11% increase in Consulting bookings. This suggests that AI’s coding prowess is displacing IT integrators who charge large sums of money to fix things like API breaks in the enterprise. If AI agents can now do much of this work, core revenue streams for integrators may decline. Barclays has the digital IT services group (EPAM, Globant, Grid Dynamics) down 30%-35% year to date on AI-disruption repricing.
+ 
+Bringing the Gold Back Home. The 2022 seizure of $300bn in Russian reserves taught every central bank that gold held in someone else’s vault is gold held at someone else’s discretion. Central banks are now storing gold domestically according to the World Gold Council. Domestic storage over the past year has gone from 5% to 9%. Diversified overseas storage has risen from 2% to 10%. The Swiss National Bank, which aligned with Western sanctions on Russia, dropped sharply from 12% to 6% as a vaulting location. The World Gold Council data shows that the lesson was learned.
+ 
+Much of paper gold trading is underpinned by Western reserves. Gold sitting in Ankara, Warsaw or Beijing is effectively removed from the lending and leasing market. Historically central bank gold lending let bullion banks and producers sell borrowed gold short. Less lendable supply means the market has fewer tools to lean against a rally, which is bullish for volatility and the price floor.
+ 
+Credit Intensity of GDP is Rising. Odd Lots quoted Bespoke Investment Group data that shows the credit intensity of GDP (debt growth per unit of GDP growth) has risen sharply over the past year. If AI capex monetization disappoints, you’d potentially get a triple unwind.  Equity inflows reverse. Corporate credit growth and the GDP it fuels decelerate sharply.  The fiscal arithmetic that depends on nominal growth outrunning interest costs deteriorates further. I’d go so far as to call it the single biggest risk factor in markets today, although I recognize that’s the sort of claim that ages very well or very badly.
+ 
+Not Enough Homes. When I was growing up, home ownership was achievable for most people who saved a bit of money. Housing supply peaked at 2m homes built in 2006. In the four years after the Global Financial Crisis (GFC), the number of homes built was 400,000 to 800,000. The population was growing at a rate that created the need for 1m-2m homes. It’s easy to see the imbalance from the numbers. Realtor.com now cites a cumulative U.S. housing deficit of 4.03 million homes as of 2025. The demand side is clearly there. However, on the supply side, the tight costs of labour and building materials have elevated costs to levels that people can’t afford. The gap keeps getting larger. I’m not sure what the solution could be (better zoning helps on the land prices but it doesn’t fix the other issues) but it’s a problem that keeps getting worse each year and is making young people very pessimistic about life. Increasingly outside the box, non-market solutions will have to be considered if home ownership is the goal.
+ 
+Kevin Warsh Likes Price Stability… In His Speeches. Warsh mentioned price stability over a dozen times in his first comments to the market as Fed Chair. He dropped references to balancing employment and did not talk much about AI productivity. The market took that to mean potential interest rate hikes later in the year. While this lifted the short-end of the curve, the long-end of the curve tightened as markets assumed that there would be a higher probability the Fed would get ahead of inflation. However, an issue for the Fed is the large budget deficit. It becomes hard to rein in inflation if $2 trillion of money is being created each year from deficits and higher rates will make the deficit worse. Will the White House be happy with Fed increases before the mid-terms? Call me sceptical.
+ 
+End Note
+ 
+SpaceX’s dominance over the space industry makes it look like the East India Company. In the 1820s, 72% of everything shipped between Europe and Asia belonged to the East India Company. Similarly, SpaceX sends 75% of everything humanity sends into space.
