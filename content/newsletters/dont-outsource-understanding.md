@@ -1,6 +1,6 @@
 ---
 title: "Don't Outsource Your Understanding"
-date: "2026-04-07"
+date: "2026-07-04"
 excerpt: "Ford is rehiring 300-350 veteran quality inspectors. AI is a fantastic tool but it's only as good as the information you use to train it"
 ---
 Last June, Ford’s CEO Jim Farley said in an interview with Walter Isaacson, “AI will leave a lot of white-collar people behind.” He then said at the Aspen Ideas Festival that half of white-collar workers could lose their jobs to AI in coming years. By October 2025, Ford’s COO Kumar Galhotra said Ford was “deploying AI across the entire industrial system”. They inserted 900 AI-powered cameras to “detect quality issues at the source and help us mitigate supply disruptions”. It then fired their quality inspectors.
